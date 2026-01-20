@@ -1,0 +1,93 @@
+<x-layouts.app>
+    @php
+        $breadcrumbLinks = [
+            [
+                'url' => route('dashboard'),
+                'text' => 'Dashboard',
+            ],
+            [
+                'url' => route('{{ route }}.index'),
+                'text' => '{{ title_plural }}',
+            ],
+            [
+                'text' => 'List',
+            ],
+        ];
+    @endphp
+
+    <div class="max-w-7xl mx-auto space-y-6">
+        <x-partials.breadcrumb
+            :links="$breadcrumbLinks"
+            title="{{ title_plural }}"
+            :addNewAction="route('{{ route }}.create')"
+        />
+
+        <div class="card">
+            <div class="overflow-x-auto">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            {{-- Example sortable column --}}
+                            <th scope="col" class="ps-4">
+                                <x-tables.sortable-header
+                                    field="name"
+                                    :current-sort="request('sort')"
+                                >
+                                    Name
+                                </x-tables.sortable-header>
+                            </th>
+
+                            <th scope="col">
+                                <span class="sr-only">Actions</span>
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @forelse (${{ collection }} as ${{ variable }})
+                            <tr>
+                                <td class="ps-4 font-semibold">
+                                    {{ ${{ variable }}->name ?? '-' }}
+                                </td>
+
+                                <td class="text-end pe-4">
+                                    <a
+                                        href="{{ route('{{ route }}.edit', ${{ variable }}) }}"
+                                        class="btn btn-circle btn-text btn-primary btn-sm"
+                                        aria-label="Edit Resource"
+                                    >
+                                        <span class="icon-[tabler--pencil] size-5"></span>
+                                    </a>
+
+                                    <button
+                                        type="button"
+                                        class="btn btn-circle btn-text btn-error btn-sm"
+                                        aria-label="Delete Resource"
+                                        aria-haspopup="dialog"
+                                        aria-controls="delete-modal"
+                                        data-overlay="#delete-modal"
+                                        onclick="document.getElementById('deleteResourceForm').action='{{ route('{{ route }}.destroy', ${{ variable }}) }}';"
+                                    >
+                                        <span class="icon-[tabler--trash] size-5"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="3" class="text-center">
+                                    @lang('app.no_record')
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+
+            @if (${{ collection }}->hasPages())
+                <div class="card-footer border-t border-base-content/20 p-4">
+                    {!! ${{ collection }}->links() !!}
+                </div>
+            @endif
+        </div>
+    </div>
+</x-layouts.app>

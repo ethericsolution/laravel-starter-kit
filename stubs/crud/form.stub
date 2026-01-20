@@ -1,0 +1,69 @@
+<x-layouts.app>
+    @php
+        $breadcrumbLinks = [
+            ['url' => route('dashboard'), 'text' => 'Dashboard'],
+            ['url' => route('{{ route }}.index'), 'text' => '{{ title_plural }}'],
+            ['text' => ${{ variable }}->id ? 'Edit' : 'Create'],
+        ];
+
+        $title = ${{ variable }}->id
+            ? "Edit {${{ variable }}->name}"
+            : 'Create {{ title_singular }}';
+    @endphp
+
+    <div class="max-w-7xl mx-auto space-y-6">
+        <x-partials.breadcrumb
+            :links="$breadcrumbLinks"
+            :title="$title"
+            :goBackAction="route('{{ route }}.index')"
+        />
+
+        <x-partials.validation-errors />
+
+        <form method="post"
+              action="{{ ${{ variable }}->id
+                    ? route('{{ route }}.update', ${{ variable }})
+                    : route('{{ route }}.store') }}">
+
+            @csrf
+
+            @if(${{ variable }}->id)
+                @method('put')
+            @endif
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="grid md:grid-cols-2 gap-4 py-2">
+
+                        {{-- Name --}}
+                        <div class="space-y-1">
+                            <label for="name" class="label-text required">Name</label>
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                value="{{ old('name', ${{ variable }}->name) }}"
+                                class="input @error('name') is-invalid @enderror"
+                                autofocus
+                            />
+                            @error('name')
+                                <span class="helper-text">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            {{-- Actions --}}
+            <div class="mt-6 space-x-2">
+                <button type="submit" class="btn btn-primary">
+                    Submit
+                </button>
+                <a href="{{ route('{{ route }}.index') }}" class="btn btn-soft">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</x-layouts.app>

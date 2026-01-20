@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class {{ model }} extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'name'
+    ];
+
+    public function scopeSearch(Builder $query, ?string $term): Builder
+    {
+        if (! $term) return $query;
+
+        return $query->where(function ($q) use ($term) {
+            $q->whereAny(['name'], 'like', "%{$term}%");
+        });
+    }
+}

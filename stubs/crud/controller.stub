@@ -1,0 +1,90 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\{{ model }};
+use App\Http\Requests\{{ model }}\StoreRequest;
+use App\Http\Requests\{{ model }}\UpdateRequest;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
+
+class {{ model }}Controller extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        ${{ collection }} = QueryBuilder::for({{ model }}::class)
+            ->allowedFilters([
+                // Global search
+                AllowedFilter::callback('search', function ($query, $value) {
+                    $query->search($value);
+                }),
+            ])
+            ->allowedSorts([
+                'created_at',
+                'name'
+                // add sortable fields
+            ])
+            ->defaultSort('-created_at')
+            ->paginate()
+            ->appends(request()->query());
+
+        return view('{{ view }}.index', compact('{{ collection }}'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        ${{ variable }} = new {{ model }}();
+
+        return view('{{ view }}.form', compact('{{ variable }}'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreRequest $request)
+    {
+        {{ model }}::create($request->validated());
+
+        return redirect()
+            ->route('{{ route }}.index')
+            ->with('success', '{{ title_singular }} created successfully.');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit({{ model }} ${{ variable }})
+    {
+        return view('{{ view }}.form', compact('{{ variable }}'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UpdateRequest $request, {{ model }} ${{ variable }})
+    {
+        ${{ variable }}->update($request->validated());
+
+        return redirect()
+            ->route('{{ route }}.index')
+            ->with('success', '{{ title_singular }} updated successfully.');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy({{ model }} ${{ variable }})
+    {
+        ${{ variable }}->delete();
+
+        return redirect()
+            ->route('{{ route }}.index')
+            ->with('success', '{{ title_singular }} deleted successfully.');
+    }
+}

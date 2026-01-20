@@ -1,0 +1,68 @@
+<?php
+
+use App\Models\User;
+use App\Models\{{ model }};
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
+
+beforeEach(function () {
+    $this->admin = User::factory()->create();
+});
+
+test('guest cannot access {{ model }} pages', function () {
+    $this->get(route('{{ route }}.index'))
+        ->assertRedirect(route('login'));
+});
+
+test('{{ model }} index page loads', function () {
+    $this->actingAs($this->admin)
+        ->get(route('{{ route }}.index'))
+        ->assertOk();
+});
+
+test('{{ model }} can be created', function () {
+    $this->actingAs($this->admin)
+        ->post(route('{{ route }}.store'), [
+            // fields
+            'name' => 'Test',
+        ])
+        ->assertRedirect(route('{{ route }}.index'));
+
+    $this->assertDatabaseCount('{{ table }}', 1);
+});
+
+test('{{ model }} creation requires validation', function () {
+    $this->actingAs($this->admin)
+        ->post(route('{{ route }}.store'), [])
+        ->assertSessionHasErrors(['name']);
+});
+
+test('{{ model }} can be updated', function () {
+    $item = {{ model }}::factory()->create();
+
+    $this->actingAs($this->admin)
+        ->put(route('{{ route }}.update', $item), [
+            // fields
+            'name' => 'Test',
+        ])
+        ->assertRedirect(route('{{ route }}.index'));
+});
+
+test('{{ model }} updating requires validation', function () {
+    $this->actingAs($this->admin)
+        ->post(route('{{ route }}.store'), [])
+        ->assertSessionHasErrors(['name']);
+});
+
+test('{{ model }} can be deleted', function () {
+    $item = {{ model }}::factory()->create();
+
+    $this->actingAs($this->admin)
+        ->delete(route('{{ route }}.destroy', $item))
+        ->assertRedirect(route('{{ route }}.index'));
+
+    $this->assertDatabaseMissing('{{ table }}', [
+        'id' => $item->id,
+    ]);
+});
