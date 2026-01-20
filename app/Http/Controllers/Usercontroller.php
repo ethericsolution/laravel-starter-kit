@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\User\StoreRequest as UserStoreRequest;
-use App\Http\Requests\User\UpdateRequest as UserUpdateRequest;
+use App\Http\Requests\User\StoreRequest;
+use App\Http\Requests\User\UpdateRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -50,7 +50,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(UserStoreRequest $request)
+    public function store(StoreRequest $request)
     {
         $data = $request->validated();
         $data['password'] = Hash::make($data['password']);
@@ -72,7 +72,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UserUpdateRequest $request, User $user)
+    public function update(UpdateRequest $request, User $user)
     {
         $data = $request->validated();
         if (empty($data['password'])) {

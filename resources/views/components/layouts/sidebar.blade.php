@@ -48,7 +48,7 @@
                     'hidden' => !request()->routeIs('users.*'),
                 ]) aria-labelledby="user-management">
                     <li>
-                        <a href="{{ route('users.index') }}" @class(['', 'menu-active' => request()->routeIs('users.index')])>
+                        <a href="{{ route('users.index') }}" @class(['', 'menu-active' => request()->routeIs('users.*')])>
                             <span class="icon-[tabler--users] size-5"></span>
                             Users
                         </a>
