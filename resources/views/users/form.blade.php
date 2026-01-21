@@ -3,7 +3,7 @@
         $breadcrumbLinks = [
             ['url' => route('dashboard'), 'text' => 'Dashboard'],
             ['url' => route('users.index'), 'text' => 'Users'],
-            ['text' => $user->id ? "Edit" : 'Create'],
+            ['text' => $user->id ? 'Edit' : 'Create'],
         ];
 
         $title = $user->id ? "Edit {$user->name}" : 'Create User';
@@ -25,51 +25,16 @@
                     <div class="grid md:grid-cols-2 gap-4 py-2">
 
                         {{-- Name --}}
-                        <div class="space-y-1">
-                            <label for="name" class="label-text required">Name</label>
-                            <input class="input @error('name') is-invalid @enderror" type="text" id="name"
-                                name="name" value="{{ old('name', $user->name) }}" autofocus />
-                            @error('name')
-                                <span class="helper-text">{{ $message }}</span>
-                            @enderror
-                        </div>
+                        <x-form.input label="Name" name="name" :value="$user->name" required autofocus />
 
                         {{-- Email --}}
-                        <div class="space-y-1">
-                            <label for="email" class="label-text required">Email Address</label>
-                            <input class="input @error('email') is-invalid @enderror" type="email" id="email"
-                                name="email" value="{{ old('email', $user->email) }}" />
-                            @error('email')
-                                <span class="helper-text">{{ $message }}</span>
-                            @enderror
-                        </div>
+                        <x-form.input label="Email Address" name="email" type="email" :value="$user->email" required />
 
                         {{-- Password --}}
-                        <div class="space-y-1">
-                            <label for="password" class="label-text {{ $user->id ? '' : 'required' }}">Password</label>
-                            <input class="input @error('password') is-invalid @enderror" type="password" id="password"
-                                name="password" />
-                            @error('password')
-                                <span class="helper-text">{{ $message }}</span>
-                            @enderror
-
-                            @if ($user->id)
-                                <p class="text-xs text-gray-500">
-                                    Leave blank to keep the current password.
-                                </p>
-                            @endif
-                        </div>
+                        <x-form.password label="New Password" name="password" :required="!$user->id" />
 
                         {{-- Confirm Password --}}
-                        <div class="space-y-1">
-                            <label for="password_confirmation" class="label-text {{ $user->id ? '' : 'required' }}">Confirm Password</label>
-                            <input class="input @error('password_confirmation') is-invalid @enderror" type="password"
-                                id="password_confirmation" name="password_confirmation" />
-                            @error('password_confirmation')
-                                <span class="helper-text">{{ $message }}</span>
-                            @enderror
-                        </div>
-
+                        <x-form.password label="Confirm Password" name="password_confirmation" :required="!$user->id" />
                     </div>
                 </div>
             </div>

@@ -15,41 +15,15 @@
 
                 <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
-                <div class="space-y-1">
-                    <label class="label-text required" for="email">Email address</label>
-                    <input type="email" class="input @error('email') is-invalid @enderror" id="email"
-                        name="email" value="{{ old('email', $request->email) }}" readonly required />
-                    @error('email')
-                        <span class="helper-text">{{ $message }}</span>
-                    @enderror
-                </div>
 
-                <div class="space-y-1">
-                    <label for="password" class="label-text required">Password</label>
-                    <div class="input @error('password') is-invalid @enderror">
-                        <input id="password" type="password" name="password" />
-                        <button type="button" data-toggle-password='{ "target": "#password" }'
-                            class="block cursor-pointer" aria-label="password">
-                            <span class="icon-[tabler--eye] password-active:block hidden size-5 shrink-0"></span>
-                            <span class="icon-[tabler--eye-off] password-active:hidden block size-5 shrink-0"></span>
-                        </button>
-                    </div>
-                    @error('password')
-                        <span class="helper-text">{{ $message }}</span>
-                    @enderror
-                </div>
+                {{-- Email --}}
+                <x-form.input label="Email Address" name="email" type="email" :value="$request->email" readonly required />
 
-                <div class="space-y-1">
-                    <label for="password_confirmation" class="label-text required">Confirm Password</label>
-                    <div class="input">
-                        <input id="password_confirmation" type="password" name="password_confirmation" />
-                        <button type="button" data-toggle-password='{ "target": "#password_confirmation" }'
-                            class="block cursor-pointer" aria-label="password_confirmation">
-                            <span class="icon-[tabler--eye] password-active:block hidden size-5 shrink-0"></span>
-                            <span class="icon-[tabler--eye-off] password-active:hidden block size-5 shrink-0"></span>
-                        </button>
-                    </div>
-                </div>
+                {{-- Password --}}
+                <x-form.password label="Password" name="password" required />
+
+                {{-- Confirm Password --}}
+                <x-form.password label="Confirm Password" name="password_confirmation" required />
 
                 <button class="btn btn-lg btn-primary btn-gradient btn-block">Set new password</button>
             </form>

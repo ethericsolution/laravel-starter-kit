@@ -17,17 +17,11 @@
                     @endif
 
                     <div class="grid md:grid-cols-2 gap-6">
-                        <div class="space-y-1">
-                            <label for="name" class="label-text">Name</label>
-                            <input type="text" class="input" id="name" name="name"
-                                value="{{ old('name', Auth::user()->name) }}" required>
-                        </div>
+                        {{-- Name --}}
+                        <x-form.input label="Name" name="name" :value="Auth::user()->name" required />
 
-                        <div class="space-y-1">
-                            <label for="email" class="label-text">Email Address</label>
-                            <input type="email" class="input" id="email" name="email"
-                                value="{{ old('email', Auth::user()->email) }}" required>
-                        </div>
+                        {{-- Email --}}
+                        <x-form.input label="Email Address" name="email" type="email" :value="Auth::user()->email" required />
 
                         <div class="col-span-full">
                             <button type="submit" class="btn btn-primary">Update Profile</button>
@@ -63,7 +57,7 @@
 
                     {{-- Confirm 2FA --}}
                     @if (!auth()->user()->two_factor_confirmed_at)
-                        <form method="POST" action="{{route('two-factor.confirm')}}" class="mb-4">
+                        <form method="POST" action="{{ route('two-factor.confirm') }}" class="mb-4">
                             @csrf
                             <input type="text" name="code" placeholder="Enter 6-digit code" required
                                 class="border p-2">
@@ -100,22 +94,14 @@
                     <h5 class="text-base-content text-lg font-medium">Change Password</h5>
 
                     <div class="grid md:grid-cols-2 gap-6">
-                        <div class="space-y-1">
-                            <label for="current_password" class="label-text">Current Password</label>
-                            <input type="password" class="input" id="current_password" name="current_password"
-                                required>
-                        </div>
+                        {{-- Current Password --}}
+                        <x-form.password label="Current Password" name="current_password" required />
 
-                        <div class="space-y-1">
-                            <label for="password" class="label-text">New Password</label>
-                            <input type="password" class="input" id="password" name="password" required>
-                        </div>
+                        {{-- New Password --}}
+                        <x-form.password label="New Password" name="password" required />
 
-                        <div class="space-y-1">
-                            <label for="password_confirmation" class="label-text">Confirm New Password</label>
-                            <input type="password" class="input" id="password_confirmation"
-                                name="password_confirmation" required>
-                        </div>
+                        {{-- Confirm New Password --}}
+                        <x-form.password label="Confirm New Password" name="password_confirmation" required />
 
                         <div class="col-span-full">
                             <button type="submit" class="btn btn-primary">Change Password</button>

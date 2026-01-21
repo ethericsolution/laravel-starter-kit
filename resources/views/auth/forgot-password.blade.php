@@ -17,14 +17,8 @@
             <form method="POST" action="{{ route('password.email') }}" class="mb-4 space-y-4">
                 @csrf
 
-                <div class="space-y-1">
-                    <label class="label-text required" for="email">Email address</label>
-                    <input type="email" class="input @error('email') is-invalid @enderror" id="email"
-                        name="email" value="{{ old('email') }}" required />
-                    @error('email')
-                        <span class="helper-text">{{ $message }}</span>
-                    @enderror
-                </div>
+                {{-- Email --}}
+                <x-form.input label="Email Address" name="email" type="email" required autofocus />
 
                 <button class="btn btn-lg btn-primary btn-gradient btn-block">Send Reset Link</button>
             </form>

@@ -12,50 +12,17 @@
             <form class="mb-4 space-y-4" method="POST" action="{{ route('register') }}">
                 @csrf
 
-                <div class="space-y-1">
-                    <label for="name" class="label-text required">Name</label>
-                    <input type="text" class="input @error('name') is-invalid @enderror" id="name"
-                        name="name" value="{{ old('name') }}" autofocus>
-                    @error('name')
-                        <span class="helper-text">{{ $message }}</span>
-                    @enderror
-                </div>
+                {{-- Name --}}
+                <x-form.input label="Name" name="name" required autofocus />
 
-                <div class="space-y-1">
-                    <label for="email" class="label-text required">Email Address</label>
-                    <input type="email" class="input @error('email') is-invalid @enderror" id="email"
-                        name="email" value="{{ old('email') }}">
-                    @error('email')
-                        <span class="helper-text">{{ $message }}</span>
-                    @enderror
-                </div>
+                {{-- Email --}}
+                <x-form.input label="Email Address" name="email" type="email" required />
 
-                <div class="space-y-1">
-                    <label for="password" class="label-text required">Password</label>
-                    <div class="input @error('password') is-invalid @enderror">
-                        <input id="password" type="password" name="password" />
-                        <button type="button" data-toggle-password='{ "target": "#password" }'
-                            class="block cursor-pointer" aria-label="password">
-                            <span class="icon-[tabler--eye] password-active:block hidden size-5 shrink-0"></span>
-                            <span class="icon-[tabler--eye-off] password-active:hidden block size-5 shrink-0"></span>
-                        </button>
-                    </div>
-                    @error('password')
-                        <span class="helper-text">{{ $message }}</span>
-                    @enderror
-                </div>
+                {{-- Password --}}
+                <x-form.password label="Password" name="password" required />
 
-                <div class="space-y-1">
-                    <label for="password_confirmation" class="label-text required">Confirm Password</label>
-                    <div class="input">
-                        <input id="password_confirmation" type="password" name="password_confirmation" />
-                        <button type="button" data-toggle-password='{ "target": "#password_confirmation" }'
-                            class="block cursor-pointer" aria-label="password_confirmation">
-                            <span class="icon-[tabler--eye] password-active:block hidden size-5 shrink-0"></span>
-                            <span class="icon-[tabler--eye-off] password-active:hidden block size-5 shrink-0"></span>
-                        </button>
-                    </div>
-                </div>
+                {{-- Confirm Password --}}
+                <x-form.password label="Confirm Password" name="password_confirmation" required />
 
                 <button class="btn btn-lg btn-primary btn-gradient btn-block">Sign Up to
                     {{ config('app.name') }}</button>

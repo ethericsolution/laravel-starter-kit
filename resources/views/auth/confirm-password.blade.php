@@ -17,21 +17,8 @@
             @endsession
             <form method="POST" action="{{ route('password.confirm') }}" class="mb-4 space-y-4">
                 @csrf
-
-                <div class="space-y-1">
-                    <label class="label-text required" for="password">Password</label>
-                    <div class="input @error('password') is-invalid @enderror">
-                        <input id="password" type="password" name="password" />
-                        <button type="button" data-toggle-password='{ "target": "#password" }'
-                            class="block cursor-pointer" aria-label="password">
-                            <span class="icon-[tabler--eye] password-active:block hidden size-5 shrink-0"></span>
-                            <span class="icon-[tabler--eye-off] password-active:hidden block size-5 shrink-0"></span>
-                        </button>
-                    </div>
-                    @error('password')
-                        <span class="helper-text">{{ $message }}</span>
-                    @enderror
-                </div>
+                {{-- Password --}}
+                <x-form.password label="Password" name="password" required />
 
                 <button class="btn btn-lg btn-primary btn-gradient btn-block">Confirm</button>
             </form>

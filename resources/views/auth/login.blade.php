@@ -11,36 +11,16 @@
         <div class="space-y-4">
             <form method="POST" action="{{ route('login') }}" class="mb-4 space-y-4">
                 @csrf
-                <div class="space-y-1">
-                    <label class="label-text required" for="email">Email address</label>
-                    <input type="email" class="input @error('email') is-invalid @enderror" id="email"
-                        name="email" value="{{ old('email') }}" />
-                    @error('email')
-                        <span class="helper-text">{{ $message }}</span>
-                    @enderror
-                </div>
 
-                <div class="space-y-1">
-                    <label class="label-text required" for="password">Password</label>
-                    <div class="input @error('password') is-invalid @enderror">
-                        <input id="password" type="password" name="password" />
-                        <button type="button" data-toggle-password='{ "target": "#password" }'
-                            class="block cursor-pointer" aria-label="password">
-                            <span class="icon-[tabler--eye] password-active:block hidden size-5 shrink-0"></span>
-                            <span class="icon-[tabler--eye-off] password-active:hidden block size-5 shrink-0"></span>
-                        </button>
-                    </div>
-                    @error('password')
-                        <span class="helper-text">{{ $message }}</span>
-                    @enderror
-                </div>
+                {{-- Email --}}
+                <x-form.input label="Email Address" name="email" type="email" required autofocus />
+
+                {{-- Password --}}
+                <x-form.password label="Password" name="password" required />
 
                 <div class="flex items-center justify-between gap-y-2">
-                    <div class="flex items-center gap-2">
-                        <input type="checkbox" class="checkbox checkbox-primary" id="rememberMe" />
-                        <label class="label-text text-base-content/80 p-0 text-base" for="rememberMe">Remember
-                            Me</label>
-                    </div>
+                    <x-form.checkbox name="remember" id="rememberMe" label="Remember Me" />
+
                     @if (Route::has('password.request'))
                         <a href="{{ route('password.request') }}"
                             class="link link-animated link-primary font-normal">Forgot Your Password?</a>

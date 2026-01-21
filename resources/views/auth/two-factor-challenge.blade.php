@@ -18,14 +18,8 @@
             <form method="POST" action="{{ route('two-factor.login') }}" class="mb-4 space-y-4">
                 @csrf
 
-                <div class="space-y-1">
-                    <label class="label-text required" for="code">Code</label>
-                    <input type="text" class="input @error('code') is-invalid @enderror" id="code"
-                        name="code" value="{{ old('code') }}" required autofocus />
-                    @error('code')
-                        <span class="helper-text">{{ $message }}</span>
-                    @enderror
-                </div>
+                {{-- Code --}}
+                <x-form.input label="Code" name="code" required autofocus />
 
                 <button class="btn btn-lg btn-primary btn-gradient btn-block">{{ __('Confirm') }}</button>
             </form>
